@@ -7,7 +7,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+
 builder.Services.AddExceptionHandler<AppExceptionHandler>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -10,5 +10,7 @@ namespace ExpenseTracker.ExpenseDataContext
         }
 
         public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Expense> Expenses { get; set; }
     }
 }
