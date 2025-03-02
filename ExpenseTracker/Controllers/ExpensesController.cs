@@ -16,7 +16,7 @@ namespace ExpenseTracker.Controllers
             _expenseService = expenseService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllExpenses")]
         public async Task<IActionResult> GetAllExpenses()
         {
             var expenses = await _expenseService.GetAllExpensesAsync();

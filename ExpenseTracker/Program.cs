@@ -20,7 +20,22 @@ builder.Services.AddDbContext<ExpenseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
+
+//app.UseDefaultFiles();
+//app.UseStaticFiles();
+
 app.UseExceptionHandler(_ => { });
 
 if (app.Environment.IsDevelopment())
@@ -30,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAngularApp");
 app.UseAuthorization();
 app.MapControllers();
+//app.MapFallbackToFile("index.html");
 app.Run();
