@@ -1,24 +1,26 @@
 <div class="container mt-4">
     <h2>Account Summary</h2>
     <div class="card border-radius">
-        <div class="card-body">
+        <div *ngIf="accountSummary" class="card-body">
             <h5 class="card-title">Balance Overview</h5>
-            <p class="card-text">Total Balance:
+            <p class="card-text">Current Balance:
                 <i class="bi bi-currency-rupee"></i>
-                <strong>{{accountSummary.balance}}</strong>
+                <strong>{{accountSummary.balance | number:'1.0-0'}}</strong>
             </p>
             <p class="card-text">Income:
                 <i class="bi bi-currency-rupee"></i>
-                <strong>94,821</strong>
+                <strong>94,821 </strong>
             </p>
-            <p class="card-text">Expenses: <strong>$3,000</strong></p>
+            <p class="card-text">Expenses: 
+                <i class="bi bi-currency-rupee"></i>
+                <strong>{{totalExpense | number:'1.0-0'}}</strong></p>
         </div>
     </div>
 
     <!-- Heading and Button Row -->
     <div class="d-flex justify-content-between align-items-center mt-4">
         <h3 class="m-0">Recent Transactions</h3>
-        <button class="btn btn-success border-radius" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+        <button class="btn btn-secondary border-radius" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
             <strong>Add Expense</strong>
         </button>
     </div>
@@ -33,13 +35,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let e of expenses">
+            <tr *ngFor="let e of expenses.slice(-5)">
                 <td>{{ e.transactionDate | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ e.expenseName }}</td>
                 <td><i class="bi bi-currency-rupee"></i>{{ e.amount | number:'1.0-0' }}</td>
                 <td class="text-danger">Expense</td>
             </tr>
-        </tbody>
+        </tbody>              
     </table>
 </div>
 <!-- Bootstrap Modal -->
@@ -54,21 +56,21 @@
                 <form>
                     <div class="mb-3">
                         <label for="expenseName" class="form-label">Expense Name</label>
-                        <input type="text" class="form-control" id="expenseName" [(ngModel)]="newExpense.expenseName"
+                        <input type="text" class="form-control border-radius" id="expenseName" [(ngModel)]="newExpense.expenseName"
                             name="expenseName">
                     </div>
                     <div class="mb-3">
                         <label for="amount" class="form-label">Amount</label>
-                        <input type="number" class="form-control" id="amount" [(ngModel)]="newExpense.amount"
+                        <input type="number" class="form-control border-radius" id="amount" [(ngModel)]="newExpense.amount"
                             name="amount">
                     </div>
                     <div class="mb-3">
                         <label for="transactionDate" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="transactionDate"
+                        <input type="date" class="form-control border-radius" id="transactionDate"
                             [(ngModel)]="newExpense.transactionDate" name="transactionDate">
                     </div>
-                    <button type="button" class="btn btn-primary" (click)="addExpense()" data-bs-dismiss="modal">
-                        Save Expense
+                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()" data-bs-dismiss="modal">
+                        Save
                     </button>
                 </form>
             </div>

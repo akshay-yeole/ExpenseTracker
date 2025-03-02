@@ -11,11 +11,19 @@ import { Expense } from '../models/expense.model';
 })
 export class AccountSummaryComponent implements OnInit {
   accountSummary!: Account;
-  expenses!: Expense[];
-  totalExpenses: number = 0;
-  newExpense :Expense = { amount: 0, expenseName: '', id: 0, transactionDate: new Date()};
+  expenses: Expense[] =[];
+  totalExpense: number = 0;
+  newExpense: Expense = {
+    amount: 0,
+    expenseName: '',
+    id: 0,
+    transactionDate: new Date(),
+  };
 
-  constructor(private accountSummaryService: AccountSummaryService, private expenseService : ExpenseService) {}
+  constructor(
+    private accountSummaryService: AccountSummaryService,
+    private expenseService: ExpenseService
+  ) {}
 
   ngOnInit(): void {
     this.accountSummaryService
@@ -24,10 +32,21 @@ export class AccountSummaryComponent implements OnInit {
         this.accountSummary = accountSummary;
       });
 
-      this.expenseService.getAllExpenses().subscribe((expenses) => {
-        this.expenses = expenses;
-      });
+    this.loadExpenses();
   }
 
-  addExpense(){}
+  loadExpenses() {
+    this.expenseService.getAllExpenses().subscribe((data) => {
+      this.expenses = data || []; 
+      this.calculateTotalExpense(); 
+    });
+  }
+
+  calculateTotalExpense() {
+    this.totalExpense = this.expenses.reduce((sum, e) => sum + e.amount, 0);
+  }
+
+  addExpense() {
+    this.expenseService.addExpense(this.newExpense).subscribe();
+  }
 }

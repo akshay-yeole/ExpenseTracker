@@ -14,4 +14,8 @@ export class ExpenseService {
   getAllExpenses() : Observable<Expense[]>{
     return this.client.get<Expense[]>(`${this.baseApiUrl}/Expenses/GetAllExpenses`);
   }
+
+  addExpense(expense: Expense) {
+    return this.client.post<Expense>(`${this.baseApiUrl}/Expenses/AddExpense`, expense);
+  }
 }
