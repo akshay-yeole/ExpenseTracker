@@ -33,8 +33,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-//app.UseDefaultFiles();
-//app.UseStaticFiles();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseExceptionHandler(_ => { });
 
@@ -48,5 +48,5 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");
 app.UseAuthorization();
 app.MapControllers();
-//app.MapFallbackToFile("index.html");
+app.MapFallbackToFile("index.html");
 app.Run();
