@@ -7,13 +7,14 @@
                 <i class="bi bi-currency-rupee"></i>
                 <strong>{{accountSummary.balance | number:'1.0-0'}}</strong>
             </p>
-            <p class="card-text">Income:
+            <p class="card-text text-success">Income:
                 <i class="bi bi-currency-rupee"></i>
-                <strong>94,821 </strong>
+                <strong>94,821</strong>
             </p>
-            <p class="card-text">Expenses: 
+            <p class="card-text text-danger">Expenses:
                 <i class="bi bi-currency-rupee"></i>
-                <strong>{{totalExpense | number:'1.0-0'}}</strong></p>
+                <strong>{{totalExpense | number:'1.0-0'}}</strong>
+            </p>
         </div>
     </div>
 
@@ -35,13 +36,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let e of expenses.slice(-5)">
+            <tr *ngFor="let e of (expenses$ | async)?.slice(-5)?.reverse()">
                 <td>{{ e.transactionDate | date: 'dd-MM-yyyy' }}</td>
                 <td>{{ e.expenseName }}</td>
                 <td><i class="bi bi-currency-rupee"></i>{{ e.amount | number:'1.0-0' }}</td>
                 <td class="text-danger">Expense</td>
             </tr>
-        </tbody>              
+        </tbody>
     </table>
 </div>
 <!-- Bootstrap Modal -->
@@ -56,20 +57,21 @@
                 <form>
                     <div class="mb-3">
                         <label for="expenseName" class="form-label">Expense Name</label>
-                        <input type="text" class="form-control border-radius" id="expenseName" [(ngModel)]="newExpense.expenseName"
-                            name="expenseName">
+                        <input type="text" class="form-control border-radius" id="expenseName"
+                            [(ngModel)]="newExpense.expenseName" name="expenseName">
                     </div>
                     <div class="mb-3">
                         <label for="amount" class="form-label">Amount</label>
-                        <input type="number" class="form-control border-radius" id="amount" [(ngModel)]="newExpense.amount"
-                            name="amount">
+                        <input type="number" class="form-control border-radius" id="amount"
+                            [(ngModel)]="newExpense.amount" name="amount">
                     </div>
                     <div class="mb-3">
                         <label for="transactionDate" class="form-label">Date</label>
                         <input type="date" class="form-control border-radius" id="transactionDate"
                             [(ngModel)]="newExpense.transactionDate" name="transactionDate">
                     </div>
-                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()"
+                        data-bs-dismiss="modal">
                         Save
                     </button>
                 </form>

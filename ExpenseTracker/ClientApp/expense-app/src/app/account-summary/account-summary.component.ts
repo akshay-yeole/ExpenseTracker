@@ -3,6 +3,7 @@ import { Account } from '../models/account.model';
 import { AccountSummaryService } from '../services/account-summary.service';
 import { ExpenseService } from '../services/expense.service';
 import { Expense } from '../models/expense.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account-summary',
@@ -11,7 +12,7 @@ import { Expense } from '../models/expense.model';
 })
 export class AccountSummaryComponent implements OnInit {
   accountSummary!: Account;
-  expenses: Expense[] =[];
+  expenses$ : Observable<Expense[]> = this.expenseService.getAllExpenses();
   totalExpense: number = 0;
   newExpense: Expense = {
     amount: 0,
@@ -32,21 +33,17 @@ export class AccountSummaryComponent implements OnInit {
         this.accountSummary = accountSummary;
       });
 
-    this.loadExpenses();
-  }
-
-  loadExpenses() {
-    this.expenseService.getAllExpenses().subscribe((data) => {
-      this.expenses = data || []; 
-      this.calculateTotalExpense(); 
+    this.expenses$.subscribe((expenses) => {
+      this.totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     });
   }
 
-  calculateTotalExpense() {
-    this.totalExpense = this.expenses.reduce((sum, e) => sum + e.amount, 0);
-  }
-
   addExpense() {
-    this.expenseService.addExpense(this.newExpense).subscribe();
+    this.expenseService.addExpense(this.newExpense).subscribe(() => {
+      this.expenses$ = this.expenseService.getAllExpenses();
+      this.expenses$.subscribe((expenses) => {
+        this.totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+      });
+    });
   }
 }
