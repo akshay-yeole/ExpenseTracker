@@ -16,4 +16,8 @@ export class AccountSummaryService {
     return this.client.get<Account>(`${this.baseApiUrl}/Accounts/CurrentBalance`);
   }
 
+  addIncome(income : Account) {
+    return this.client.post<Account>(`${this.baseApiUrl}/Accounts/UpsertBalance`, income);
+  }
+
 }

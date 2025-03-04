@@ -1,80 +1,64 @@
-<div class="container mt-4">
-    <h2>Account Summary</h2>
-    <div class="card border-radius">
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4 bg-white">
         <div *ngIf="accountSummary" class="card-body">
-            <h5 class="card-title">Balance Overview</h5>
-            <p class="card-text">Current Balance:
-                <i class="bi bi-currency-rupee"></i>
-                <strong>{{accountSummary.balance | number:'1.0-0'}}</strong>
-            </p>
-            <p class="card-text text-success">Income:
-                <i class="bi bi-currency-rupee"></i>
-                <strong>94,821</strong>
-            </p>
-            <p class="card-text text-danger">Expenses:
-                <i class="bi bi-currency-rupee"></i>
-                <strong>{{totalExpense | number:'1.0-0'}}</strong>
-            </p>
+            <h5 class="card-title text-center text-primary fw-bold display-6">Demo, User</h5>
+            <hr>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="card p-3 shadow-sm border-0 rounded-3 bg-light">
+                        <h6 class="text-muted">Current Balance</h6>
+                        <h4 class="fw-bold text-dark">
+                            <i class="bi bi-currency-rupee"></i> {{accountSummary.balance | number:'1.0-0'}}
+                        </h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 shadow-sm border-0 rounded-3 bg-light">
+                        <h6 class="text-muted">Income</h6>
+                        <h4 class="fw-bold text-success">
+                            <i class="bi bi-currency-rupee"></i> 94,821
+                        </h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3 shadow-sm border-0 rounded-3 bg-light">
+                        <h6 class="text-muted">Expenses</h6>
+                        <h4 class="fw-bold text-danger">
+                            <i class="bi bi-currency-rupee"></i> {{totalExpense | number:'1.0-0'}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button class="btn btn-success px-4 py-2 shadow-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+                    <i class="bi bi-plus-circle"></i> Add Income
+                </button>
+            </div>
         </div>
     </div>
-
-    <!-- Heading and Button Row -->
-    <div class="d-flex justify-content-between align-items-center mt-4">
-        <h3 class="m-0">Recent Transactions</h3>
-        <button class="btn btn-secondary border-radius" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
+    
+    <div class="d-flex justify-content-between align-items-center mt-5">
+        <h3 class="text-primary fw-bold">Recent Transactions</h3>
+        <button class="btn btn-secondary px-4 py-2 shadow-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
             <strong>Add Expense</strong>
         </button>
     </div>
-
-    <table class="table table-striped mt-2">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let e of (expenses$ | async)?.slice(-5)?.reverse()">
-                <td>{{ e.transactionDate | date: 'dd-MM-yyyy' }}</td>
-                <td>{{ e.expenseName }}</td>
-                <td><i class="bi bi-currency-rupee"></i>{{ e.amount | number:'1.0-0' }}</td>
-                <td class="text-danger">Expense</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
-        <div class="modal-content border-radius">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="expenseName" class="form-label">Expense Name</label>
-                        <input type="text" class="form-control border-radius" id="expenseName"
-                            [(ngModel)]="newExpense.expenseName" name="expenseName">
+    
+    <div class="row mt-3">
+        <div *ngFor="let e of (expenses$ | async)?.slice(-5)?.reverse()" class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-3 p-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-1">{{ e.transactionDate | date: 'dd-MM-yyyy' }}</h6>
+                        <h5 class="fw-bold">{{ e.expenseName }}</h5>
                     </div>
-                    <div class="mb-3">
-                        <label for="amount" class="form-label">Amount</label>
-                        <input type="number" class="form-control border-radius" id="amount"
-                            [(ngModel)]="newExpense.amount" name="amount">
+                    <div class="text-end">
+                        <h6 class="fw-bold text-danger">
+                            <i class="bi bi-currency-rupee"></i>{{ e.amount | number:'1.0-0' }}
+                        </h6>
+                        <span class="badge bg-danger">Expense</span>
                     </div>
-                    <div class="mb-3">
-                        <label for="transactionDate" class="form-label">Date</label>
-                        <input type="date" class="form-control border-radius" id="transactionDate"
-                            [(ngModel)]="newExpense.transactionDate" name="transactionDate">
-                    </div>
-                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()"
-                        data-bs-dismiss="modal">
-                        Save
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

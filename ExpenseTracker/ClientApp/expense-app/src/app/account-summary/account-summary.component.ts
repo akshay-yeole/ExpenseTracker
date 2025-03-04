@@ -12,6 +12,10 @@ import { Observable } from 'rxjs';
 })
 export class AccountSummaryComponent implements OnInit {
   accountSummary!: Account;
+  addIncome: Account = {
+    id: 0,
+    balance: 0,
+  };
   expenses$ : Observable<Expense[]> = this.expenseService.getAllExpenses();
   totalExpense: number = 0;
   newExpense: Expense = {
@@ -45,5 +49,9 @@ export class AccountSummaryComponent implements OnInit {
         this.totalExpense = expenses.reduce((sum, expense) => sum + expense.amount, 0);
       });
     });
+  }
+  
+  addBalance(){
+    this.accountSummaryService.addIncome(this.addIncome).subscribe(res=>{this.addIncome.balance = 0;});  
   }
 }
