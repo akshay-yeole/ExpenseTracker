@@ -4,6 +4,11 @@ import { AccountSummaryComponent } from './account-summary/account-summary.compo
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'account-summary',
+    pathMatch: 'full'
+  },
+  {
     path: 'account-summary',
     component: AccountSummaryComponent
   }
