@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<!-- Bootstrap Modal -->
+<!-- addIncomeModal Modal -->
 <div class="modal fade" id="addIncomeModal" tabindex="-1" aria-labelledby="addIncomeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
         <div class="modal-content border-radius">
@@ -113,12 +113,12 @@
                     <div class="mb-3">
                         <label for="amount" class="form-label">Amount</label>
                         <input type="number" class="form-control border-radius" id="amount"
-                            [(ngModel)]="newExpense.amount" name="amount">
+                            [(ngModel)]="addIncome.balance" name="amount">
 
                     </div>
-                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()"
+                    <button type="button" class="btn btn-success border-radius" (click)="addBalance()"
                         data-bs-dismiss="modal">
-                        Save
+                        Update
                     </button>
                 </form>
             </div>
