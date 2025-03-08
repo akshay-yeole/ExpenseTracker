@@ -63,3 +63,65 @@
         </div>
     </div>
 </div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="addExpenseModal" tabindex="-1" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+        <div class="modal-content border-radius">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="expenseName" class="form-label">Expense Name</label>
+                        <input type="text" class="form-control border-radius" id="expenseName"
+                            [(ngModel)]="newExpense.expenseName" name="expenseName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control border-radius" id="amount"
+                            [(ngModel)]="newExpense.amount" name="amount">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionDate" class="form-label">Date</label>
+                        <input type="date" class="form-control border-radius" id="transactionDate"
+                            [(ngModel)]="newExpense.transactionDate" name="transactionDate">
+                    </div>
+                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()"
+                        data-bs-dismiss="modal">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="addIncomeModal" tabindex="-1" aria-labelledby="addIncomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+        <div class="modal-content border-radius">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIncomeModalLabel">Add Incomde</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" class="form-control border-radius" id="amount"
+                            [(ngModel)]="newExpense.amount" name="amount">
+
+                    </div>
+                    <button type="button" class="btn btn-success border-radius" (click)="addExpense()"
+                        data-bs-dismiss="modal">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
